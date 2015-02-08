@@ -13,6 +13,11 @@ J = 0;
 % Instructions: Compute the cost of a particular choice of theta
 %               You should set J to the cost.
 
+H = X * theta;
+Diff = H - y;
+Diff = Diff .^ 2;
+SDiff = sum(Diff);
+J = SDiff / (2 * m);
 
 
 

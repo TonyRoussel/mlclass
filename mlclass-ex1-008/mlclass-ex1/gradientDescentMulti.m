@@ -18,11 +18,12 @@ for iter = 1:num_iters
     %
 
 
-
-
-
-
-
+H = X * theta;
+Diff = H - y;
+DiffM = X .* Diff;
+SDiff = transpose(sum(DiffM));
+sigma = 1 / m * (SDiff);
+theta = theta - alpha * sigma;
 
 
 
