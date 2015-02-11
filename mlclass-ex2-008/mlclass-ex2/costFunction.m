@@ -21,7 +21,12 @@ grad = zeros(size(theta));
 %
 
 
+H = sigmoid(X * theta);
+SumParam = -y .* log(H) - (1 - y) .* log(1 - H);
+Sum = sum(SumParam);
+J = Sum / m;
 
+grad = (1 / m) * transpose(sum(X .* (H - y)));
 
 
 
