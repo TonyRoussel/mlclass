@@ -49,8 +49,10 @@ X = [ones(m, 1) X];
 %                 initial_theta, options);
 %
 
+for (c = 1:num_labels);
+		default_theta = zeros(n + 1, 1);
 
-
+endfor;
 
 
 
