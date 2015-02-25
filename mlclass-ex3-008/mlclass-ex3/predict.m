@@ -23,7 +23,13 @@ p = zeros(size(X, 1), 1);
 
 
 
-
+H0 = [ones(m, 1) X];
+Z0 = H0 * transpose(Theta1);
+H1 = sigmoid(Z0);
+H1 = [ones(m, 1) H1];
+Z1 = H1 * transpose(Theta2);
+H2 = sigmoid(Z1);
+[x, p] = max(H2, [], 2);
 
 
 
