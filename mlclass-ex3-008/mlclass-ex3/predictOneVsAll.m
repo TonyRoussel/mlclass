@@ -32,7 +32,7 @@ X = [ones(m, 1) X];
 
 
 
-
+[x, p] = max(X * transpose(all_theta), [], 2);
 
 
 
