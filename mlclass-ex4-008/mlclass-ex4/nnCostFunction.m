@@ -80,16 +80,37 @@ end;
 
 J = (1 / m) * sum(sum((-Y) .* log(H) - (1 - Y) .* log(1 - H)));
 
- %%%Part2
+%Regularization
+ %On isole les thetas en enlevant le terme de recuperation du biais (NB == no bias) pour chq neurone
+Theta1_nb = Theta1(:, 2:size(Theta1, 2));
+Theta2_nb = Theta2(:, 2:size(Theta2, 2));
+Reg = (lambda / (2 * m)) * (sum(sum(Theta1_nb .^ 2)) + sum(sum(Theta2_nb .^ 2)));
+J = J + Reg;
 
+for (i = 1 : m),
+	%forward propagation
+		a1 = X(i, :); % à chq tour on travaille avec un jeu d\'exemple
+		z2 = Theta1 * transpose(a1);
+		a2 = sigmoid(z2);
+		z3 = Theta2 * [1; a2];
+		a3 = sigmoid(z3);
 
+	%back propagation
+		delta3 = a3 - Y(:, i);
+		delta2 = (transpose(Theta2) * delta3) .* sigmoidGradient([1; z2]);
+		delta2 = delta2(2 : end);
 
+		Theta2_grad = Theta2_grad + delta3 * transpose([1; a2]);
+		Theta1_grad = Theta1_grad + delta2 * a1;
+end;
 
+%Theta2_grad = Theta2_grad / m;
+%Theta1_grad = Theta1_grad / m;
 
-
-
-
-
+Theta1_grad(:, 1) = 1 / m * Theta1_grad(:, 1);
+Theta1_grad(:, 2:end) = 1 / m * Theta1_grad(:, 2:end) + lambda / m * Theta1(:, 2:end);
+Theta2_grad(:, 1) = 1 / m * Theta2_grad(:, 1);
+Theta2_grad(:, 2:end) = 1 / m * Theta2_grad(:, 2:end) + lambda / m * Theta2(:, 2:end);
 
 
 
