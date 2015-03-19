@@ -20,12 +20,18 @@ grad = zeros(size(theta));
 %
 
 
+H = X * theta;
+Diff = H - y;
+Diff = Diff .^ 2;
+SDiff = sum(Diff);
+J = SDiff / (2 * m);
+RegParam = sum((lambda / (2 * m)) * sum(theta(2:size(theta, 1)) .^ 2));
+J = J + RegParam;
 
+RegRule = ones(size(theta));
+RegRule(1) = 0;
 
-
-
-
-
+grad = (1 / m) * transpose(sum(X .* (H - y))) .+ (RegRule .* (lambda / m .* theta));
 
 
 
